@@ -162,7 +162,7 @@
     <p>WeChat Index · Google Trends · NBS Macro Indicators · LVMH & Peers · For Investment Research Purposes</p>
   </div>
   <div>
-    <div class="date-badge" id="headerDateBadge">WeChat: Apr 7, 2026 · NBS: Jan–Feb 2026 · Google Trends: Apr 10, 2026 · Resale: Apr 10, 2026</div>
+    <div class="date-badge" id="headerDateBadge">WeChat: Apr 12, 2026 · NBS: Jan–Feb 2026 · Google Trends: Apr 12, 2026 · Resale: Apr 12, 2026</div>
     <div class="source-tag">Sources: Tencent WeChat Index · Google Trends · National Bureau of Statistics China (stats.gov.cn) · Foxytotes · Watchcharts</div>
   </div>
 </div>
@@ -245,43 +245,43 @@
   <div class="section-header">
     <div class="section-label">② WeChat Index — Brand Monitor</div>
     <div class="section-line"></div>
-    <div class="section-sub">Tencent WeChat Index Mini Program · Daily weighted engagement score · Apr 7, 2026</div>
+    <div class="section-sub">Tencent WeChat Index Mini Program · Daily weighted engagement score · Apr 12, 2026</div>
   </div>
 
   <div class="kpi-row">
     <div class="kpi-card luxury">
       <div class="kpi-label">Benchmark</div>
       <div class="kpi-brand">Luxury (General)</div>
-      <div class="kpi-value">33.4M</div>
-      <div class="kpi-change down">▼ 13.86% vs prev. day</div>
-      <div class="kpi-sub">Apr 7, 2026</div>
+      <div class="kpi-value">28.9M</div>
+      <div class="kpi-change down">▼ 10.13% vs prev. day</div>
+      <div class="kpi-sub">Apr 12, 2026</div>
     </div>
     <div class="kpi-card hermes">
       <div class="kpi-label">Hermès</div>
       <div class="kpi-brand">Hermès</div>
-      <div class="kpi-value">16.4M</div>
-      <div class="kpi-change down">▼ 10.50% vs prev. day</div>
+      <div class="kpi-value">22.1M</div>
+      <div class="kpi-change down">▼ 4.87% vs prev. day</div>
       <div class="kpi-sub">Strongest brand signal</div>
     </div>
     <div class="kpi-card lv">
       <div class="kpi-label">LVMH flagship</div>
       <div class="kpi-brand">Louis Vuitton</div>
       <div class="kpi-value">4.2M</div>
-      <div class="kpi-change down">▼ 14.04% vs prev. day</div>
-      <div class="kpi-sub">Apr 7, 2026</div>
+      <div class="kpi-change up">▲ 8.37% vs prev. day</div>
+      <div class="kpi-sub">Apr 12, 2026</div>
     </div>
     <div class="kpi-card cartier">
       <div class="kpi-label">Richemont</div>
       <div class="kpi-brand">Cartier</div>
-      <div class="kpi-value">4.1M</div>
-      <div class="kpi-change up">▲ 17.61% vs prev. day</div>
-      <div class="kpi-sub">Only brand gaining today</div>
+      <div class="kpi-value">3.0M</div>
+      <div class="kpi-change down">▼ 4.03% vs prev. day</div>
+      <div class="kpi-sub">Apr 12, 2026</div>
     </div>
     <div class="kpi-card gucci">
       <div class="kpi-label">Kering</div>
       <div class="kpi-brand">Gucci</div>
-      <div class="kpi-value">1.6M</div>
-      <div class="kpi-change down">▼ 0.49% vs prev. day</div>
+      <div class="kpi-value">2.0M</div>
+      <div class="kpi-change up">▲ 6.78% vs prev. day</div>
       <div class="kpi-sub">Weakest brand signal</div>
     </div>
   </div>
@@ -298,7 +298,7 @@
   <div class="charts-row">
     <div class="panel">
       <div class="panel-title">Index Trend <span class="period-tag" id="lineTag">Last 30 Days</span></div>
-      <div class="panel-subtitle" id="lineSub">Mar 9 – Apr 7, 2026 · Daily weighted engagement score</div>
+      <div class="panel-subtitle" id="lineSub">Mar 14 – Apr 12, 2026 · Daily weighted engagement score</div>
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:#2e9e6b"></div>Luxury (General)</div>
         <div class="legend-item"><div class="legend-dot" style="background:#e8a020"></div>Hermès</div>
@@ -485,7 +485,7 @@ const C={luxury:'#2e9e6b',hermes:'#e8a020',lv:'#5b9bd5',cartier:'#c0392b',gucci:
 // WeChat & NBS dates are hardcoded (manual update). Google Trends & Resale are
 // auto-detected from fetched JSON data and update the badge on page load.
 const HEADER_DATES = {
-  wechat: 'Apr 7, 2026',
+  wechat: 'Apr 12, 2026',
   nbs:    'Jan\u2013Feb 2026',
   trends: null,
   resale: null
@@ -583,78 +583,78 @@ new Chart(document.getElementById('jewelryChart'),{
 // ── WECHAT DATA ───────────────────────────────────────────────────────────────
 const WDATA={
   '7d':{
-    lineTag:'Last 7 Days',lineSub:'Apr 1 – Apr 7, 2026 · Daily weighted engagement score',
-    barTag:'Last 7 Days',barSub:'Apr 1 – Apr 7, 2026 · Hover bars for exact values',
-    labels:['Apr 1','Apr 2','Apr 3','Apr 4','Apr 5','Apr 6','Apr 7'],
-    luxury:[24.1,23.2,25.5,40.5,38.2,35.8,33.4],
-    hermes:[15.2,14.6,15.9,26.1,23.6,20.1,16.4],
-    lv:[5.1,4.9,4.6,4.4,4.3,4.2,4.2],
-    cartier:[4.6,4.4,4.2,3.9,3.9,4.0,4.1],
-    gucci:[2.0,1.9,1.8,1.8,1.7,1.7,1.6],
-    avgs:[31.9,18.3,4.6,3.9,1.7],
+    lineTag:'Last 7 Days',lineSub:'Apr 6 – Apr 12, 2026 · Daily weighted engagement score',
+    barTag:'Last 7 Days',barSub:'Apr 6 – Apr 12, 2026 · Hover bars for exact values',
+    labels:['Apr 6','Apr 7','Apr 8','Apr 9','Apr 10','Apr 11','Apr 12'],
+    luxury:[38.7,33.4,31.0,42.0,38.0,34.0,28.9],
+    hermes:[18.3,16.4,17.0,26.0,24.0,23.2,22.1],
+    lv:[4.9,4.2,4.0,4.1,4.0,3.9,4.2],
+    cartier:[3.4,4.1,3.8,3.6,3.4,3.2,3.0],
+    gucci:[1.7,1.6,1.7,1.8,1.9,1.9,2.0],
+    avgs:[34.9,21.2,4.1,3.5,1.8],
     insights:[
-      {c:C.luxury,brand:'Luxury (General)',title:'Tariff announcement drives spike on Apr 4',
-       text:'Luxury general index surged to ~40M on Apr 4 (+67.7% vs prior day), coinciding with the US tariff announcement on Chinese goods. The spike likely reflects media and consumer conversation about tariff impact on luxury prices — not necessarily purchase intent.',
-       source:'Anomaly flagged by WeChat Index official alert system (数据异动记录)'},
-      {c:C.hermes,brand:'Hermès',title:'Hermès also spiked — possibly "safe haven" narrative',
-       text:'Hermès reached ~26M on Apr 4, co-moving with the macro spike. This may reflect a perception of Hermès as a store of value amid economic uncertainty — a narrative common in Chinese financial media. Causal link is indicative only.',
+      {c:C.luxury,brand:'Luxury (General)',title:'Continued normalization post-tariff spike',
+       text:'After the Apr 4 tariff-driven spike to ~40M, the luxury general index has been normalizing. By Apr 12 it reached 28.9M (▼10.1% vs Apr 11), approaching but still above the pre-tariff baseline of ~24M. The elevated level suggests the macro conversation around tariffs and luxury pricing has not fully dissipated.',
+       source:'Trend observation based on WeChat Index data'},
+      {c:C.hermes,brand:'Hermès',title:'Hermès surges to 22.1M — new 7-day high',
+       text:'Hermès reached 22.1M on Apr 12, the highest level in the current 7-day window and well above its recent baseline of ~15–18M. This elevated level coincides with continued safe-haven narrative around Hermès in Chinese financial media amid trade uncertainty. Causal link is indicative only.',
        source:'Trend observation; causal attribution not confirmed'},
-      {c:C.lv,brand:'Louis Vuitton',title:'LV & peers flat — not central to tariff conversation',
-       text:'LV (5.1M→4.2M), Cartier (4.6M→4.1M), and Gucci (2.0M→1.6M) showed no material spike on Apr 4 and declined over the week. These brands do not appear to be driving the current macro conversation in WeChat media.',
+      {c:C.lv,brand:'Louis Vuitton',title:'LV recovering modestly — ▲8.4% on Apr 12',
+       text:'After declining from 4.9M (Apr 6) to 3.9M (Apr 11), LV recovered to 4.2M on Apr 12 (+8.4% vs prev. day). The move is modest and within normal daily volatility. No structural improvement signal yet.',
        source:'Trend observation based on WeChat Index data'},
-      {c:C.luxury,brand:'Overall',title:'Post-peak normalization — still elevated vs. baseline',
-       text:'By Apr 5–7 both luxury general and Hermès begin normalizing. Current luxury general level (~33M) remains above the ~24M pre-tariff baseline on Apr 1, suggesting the macro conversation has not fully dissipated.',
-       source:'Trend observation based on WeChat Index data'},
+      {c:C.gucci,brand:'Gucci',title:'Gucci gradual uptick — still structurally weak',
+       text:'Gucci edged up from 1.6M (Apr 7) to 2.0M (Apr 12, ▲6.8%), the highest level in the 7-day window. While directionally positive, the absolute level remains the lowest of all tracked brands and is consistent with continued structural weakness in China.',
+       source:'Kering FY2024 annual results (February 2025)'},
     ]
   },
   '30d':{
-    lineTag:'Last 30 Days',lineSub:'Mar 9 – Apr 7, 2026 · Daily weighted engagement score',
-    barTag:'Last 30 Days',barSub:'Mar 9 – Apr 7, 2026 · Hover bars for exact values',
-    labels:['3/9','3/10','3/11','3/12','3/13','3/14','3/15','3/16','3/17','3/18','3/19','3/20','3/21','3/22','3/23','3/24','3/25','3/26','3/27','3/28','3/29','3/30','3/31','4/1','4/2','4/3','4/4','4/5','4/6','4/7'],
-    luxury:[19.4,19.8,20.5,21.8,21.2,20.5,20.0,21.5,22.8,22.0,21.5,22.2,23.0,23.8,24.0,24.8,25.5,24.8,24.2,25.0,25.8,34.5,25.5,24.1,23.2,25.5,40.5,38.2,35.8,33.4],
-    hermes:[16.0,15.5,15.2,15.8,15.0,14.5,14.2,14.0,13.5,13.8,13.8,13.8,14.0,14.2,14.5,14.8,14.5,14.2,14.0,14.5,14.8,15.0,13.5,15.2,14.6,15.9,26.1,23.6,20.1,16.4],
-    lv:[3.7,4.5,5.2,5.5,5.0,4.8,4.5,4.2,4.0,3.9,4.0,4.5,4.8,4.2,4.0,14.8,6.0,4.5,4.2,4.0,4.0,3.8,3.8,5.1,4.9,4.6,4.4,4.3,4.2,4.2],
-    cartier:[3.3,4.5,5.0,4.5,4.0,3.8,3.5,3.5,3.3,3.2,3.2,3.2,3.2,3.2,3.2,3.2,3.2,3.2,3.2,3.2,3.2,3.2,3.2,4.6,4.4,4.2,3.9,3.9,4.0,4.1],
-    gucci:[3.0,2.8,2.5,2.4,2.3,2.2,2.1,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,1.9,1.9,1.9,1.9,1.8,1.8,2.0,1.9,1.8,1.8,1.7,1.7,1.6],
-    avgs:[25.0,15.7,5.8,3.9,2.2],
+    lineTag:'Last 30 Days',lineSub:'Mar 14 – Apr 12, 2026 · Daily weighted engagement score',
+    barTag:'Last 30 Days',barSub:'Mar 14 – Apr 12, 2026 · Hover bars for exact values',
+    labels:['3/14','3/15','3/16','3/17','3/18','3/19','3/20','3/21','3/22','3/23','3/24','3/25','3/26','3/27','3/28','3/29','3/30','3/31','4/1','4/2','4/3','4/4','4/5','4/6','4/7','4/8','4/9','4/10','4/11','4/12'],
+    luxury:[23.9,23.5,23.0,22.8,22.5,22.0,22.2,23.0,23.8,24.0,24.8,25.5,24.8,24.2,25.0,25.8,34.5,25.5,24.1,23.2,25.5,40.5,38.2,38.7,33.4,31.0,42.0,38.0,34.0,28.9],
+    hermes:[15.2,15.0,14.8,14.5,14.2,14.0,14.2,14.5,14.8,15.0,15.2,14.8,14.5,14.2,14.5,14.8,15.0,13.5,15.2,14.6,15.9,26.1,23.6,18.3,16.4,17.0,26.0,24.0,23.2,22.1],
+    lv:[4.9,4.8,4.5,4.2,4.0,3.9,4.0,4.5,4.8,4.2,4.0,14.8,6.0,4.5,4.2,4.0,3.8,3.8,5.1,4.9,4.6,4.4,4.3,4.9,4.2,4.0,4.1,4.0,3.9,4.2],
+    cartier:[7.4,6.0,5.0,4.5,4.0,3.8,3.5,3.5,3.3,3.2,3.2,3.2,3.2,3.2,3.2,3.2,3.2,3.2,4.6,4.4,4.2,3.9,3.9,3.4,4.1,3.8,3.6,3.4,3.2,3.0],
+    gucci:[2.7,2.5,2.4,2.3,2.2,2.1,2.0,2.0,2.0,2.0,2.0,2.0,1.9,1.9,1.9,1.9,1.8,1.8,2.0,1.9,1.8,1.8,1.7,1.7,1.6,1.7,1.8,1.9,1.9,2.0],
+    avgs:[27.6,16.8,5.4,3.9,2.1],
     insights:[
-      {c:C.luxury,brand:'Luxury (General)',title:'Index rose +72% over 30 days',
-       text:'From 19.4M (Mar 9) to 33.4M (Apr 7). The acceleration in early April is largely tariff-related, inflating the 30-day average to 25.0M. The underlying pre-tariff baseline was ~20–25M.',
+      {c:C.luxury,brand:'Luxury (General)',title:'30-day avg 27.6M — tariff spike dominates',
+       text:'The 30-day average of 27.6M is significantly inflated by the Apr 4 tariff spike (~40M) and subsequent elevated readings. The underlying pre-tariff baseline (Mar 14–Apr 3) was ~23–26M. Current level of 28.9M is elevated but normalizing.',
        source:'Trend observation based on WeChat Index data'},
-      {c:C.hermes,brand:'Hermès',title:'Hermès: most consistent brand signal',
-       text:'30-day average of 15.7M — nearly 3× Louis Vuitton (5.8M). Hermès started at 16.0M and ended at 16.4M with minimal volatility outside the Apr 4 macro event. This may suggest stronger organic brand interest vs. peers, though WeChat Index measures buzz, not sales.',
+      {c:C.hermes,brand:'Hermès',title:'Hermès 30d avg 16.8M — dominant brand signal',
+       text:'Hermès averaged 16.8M over 30 days — 3.1× Louis Vuitton (5.4M). The brand spiked to 26M on Apr 4 and again to 26M on Apr 9, both coinciding with macro uncertainty moments. The Apr 12 reading of 22.1M remains well above the Mar 14 starting point of 15.2M.',
        source:'Trend observation; consistent with Bain & Company China Luxury Report 2024'},
-      {c:C.lv,brand:'Louis Vuitton',title:'LV spike on Mar 24 — not sustained',
-       text:'LV spiked to ~15M on Mar 24 (from ~3.7M on Mar 9), then collapsed within days back to ~4M. The cause is not confirmed — possibly a product launch, price change, or viral content. The collapse suggests no durable demand shift.',
-       source:'Spike confirmed in WeChat Index; cause is indicative — verification recommended'},
-      {c:C.gucci,brand:'Gucci',title:'Gucci declining — structural weakness in China',
-       text:'30-day average of 2.2M, declining from 3.0M (Mar 9) to 1.6M (Apr 7). Consistent with Kering\'s reported Asia-Pacific revenue decline in 2024–2025, though WeChat Index alone cannot confirm causation.',
+      {c:C.cartier,brand:'Cartier',title:'Cartier declined sharply — from 7.4M to 3.0M',
+       text:'Cartier started the 30-day window at 7.4M (Mar 14) and has been on a sustained downtrend to 3.0M (Apr 12), a ▼59% decline. This is the most significant brand-level deterioration in the current window and warrants monitoring against Richemont earnings.',
+       source:'Trend observation based on WeChat Index data'},
+      {c:C.gucci,brand:'Gucci',title:'Gucci stabilizing around 2M after declining trend',
+       text:'After declining from 2.7M (Mar 14) to a low of 1.6M (Apr 7), Gucci has recovered to 2.0M (Apr 12). Still structurally weak at the lowest level of tracked brands, but the stabilization breaks the prior downtrend.',
        source:'Kering FY2024 annual results (February 2025)'},
     ]
   },
   '1y':{
-    lineTag:'All History (1 Year)',lineSub:'Apr 8, 2025 – Apr 7, 2026 · Monthly aggregated trend',
+    lineTag:'All History (1 Year)',lineSub:'Apr 13, 2025 – Apr 12, 2026 · Monthly aggregated trend',
     barTag:'All History (1 Year)',barSub:'Apr 2025 – Apr 2026 · Hover bars for exact values',
     labels:['Apr-25','May-25','Jun-25','Jul-25','Aug-25','Sep-25','Oct-25','Nov-25','Dec-25','Jan-26','Feb-26','Mar-26','Apr-26'],
-    luxury:[26.1,25.5,27.0,30.0,26.0,27.0,28.0,54.0,32.0,20.0,22.0,26.0,33.4],
-    hermes:[14.2,15.0,16.5,25.0,16.0,16.0,17.0,35.0,18.0,12.0,14.0,16.0,16.4],
+    luxury:[26.1,25.5,27.0,30.0,26.0,27.0,28.0,54.0,32.0,20.0,22.0,26.0,28.9],
+    hermes:[14.2,15.0,16.5,25.0,16.0,16.0,17.0,35.0,18.0,12.0,14.0,16.0,22.1],
     lv:[2.4,5.0,5.5,62.0,8.0,5.5,5.5,8.0,5.0,4.0,5.0,6.0,4.2],
-    cartier:[3.9,4.0,4.0,4.0,3.5,3.5,3.5,4.0,3.5,3.0,3.2,3.5,4.1],
-    gucci:[1.6,2.0,2.0,2.0,2.0,2.0,2.0,2.5,2.0,1.8,1.8,1.9,1.6],
-    avgs:[22.5,14.2,4.9,4.2,2.1],
+    cartier:[3.9,4.0,4.0,4.0,3.5,3.5,3.5,4.0,3.5,3.0,3.2,3.5,3.0],
+    gucci:[1.6,2.0,2.0,2.0,2.0,2.0,2.0,2.5,2.0,1.8,1.8,1.9,2.0],
+    avgs:[22.7,14.3,4.9,4.2,2.1],
     insights:[
-      {c:C.lv,brand:'Louis Vuitton',title:'LV anomaly in July 2025 — cause unconfirmed',
-       text:'LV reached ~62M in July 2025, momentarily surpassing the general luxury benchmark (vs. starting point of 2.4M in Apr-25). The cause has not been officially confirmed — possibly a price increase, controversy, or viral campaign. Without a verified source the nature of this spike remains unclear.',
-       source:'Spike observed in WeChat Index; cause not confirmed — further verification strongly recommended'},
-      {c:C.luxury,brand:'Luxury (General)',title:'Nov 2025 — Singles Day (11/11) seasonal peak',
-       text:'Luxury general reached ~54M during China\'s 11/11 shopping festival. Hermès also surged. This seasonal pattern validates the WeChat Index as a consumer activity proxy — it tracks real commercial events. Expected to recur in Nov 2026.',
-       source:'11/11 festival: annual event; index behavior consistent with Bain & Co. China Luxury Report 2025'},
-      {c:C.hermes,brand:'Hermès',title:'Hermès: consistently highest brand index over 12 months',
-       text:'12-month average of 14.2M — highest of any tracked brand. Grew from 14.2M (Apr-25) to 16.4M (Apr-26), +15% YoY. Consistent with Hermès reporting stronger China performance than peers, though correlation does not confirm causation.',
+      {c:C.hermes,brand:'Hermès',title:'Hermès at 22.1M — highest Apr reading in 1Y history',
+       text:'Hermès reached 22.1M on Apr 12, 2026, vs. 14.2M in Apr 2025 — a +55.6% YoY increase. The 1Y average of 14.3M confirms Hermès as the consistently dominant brand signal. Current elevated level is partly tariff-driven but also reflects structural brand strength.',
        source:'Hermès FY2025 earnings (Feb 2026); LVMH FY2025 earnings (Jan 2026)'},
-      {c:C.lv,brand:'Louis Vuitton / LVMH',title:'LV index structurally lower post-July 2025',
-       text:'After the July spike, LV\'s index fell and remained structurally below Hermès for the remainder of the year. This pattern coincides with LVMH\'s reported Asia revenue decline in H2 2025. Whether the index was a leading indicator or a lagging reflection of that decline is not established.',
+      {c:C.luxury,brand:'Luxury (General)',title:'Nov 2025 — Singles Day (11/11) seasonal peak',
+       text:'Luxury general reached ~54M during China\'s 11/11 shopping festival. This seasonal pattern validates the WeChat Index as a consumer activity proxy. The Apr 2026 reading of 28.9M is elevated vs. prior Aprils, reflecting ongoing tariff-related macro conversation.',
+       source:'11/11 festival: annual event; index behavior consistent with Bain & Co. China Luxury Report 2025'},
+      {c:C.lv,brand:'Louis Vuitton',title:'LV index structurally lower post-July 2025 anomaly',
+       text:'After the unexplained ~62M spike in July 2025, LV\'s index normalized and has remained in the 4–8M range. The Apr 2026 reading of 4.2M is near the Apr 2025 starting point of 2.4M, suggesting no net improvement in brand conversation over the year.',
        source:'LVMH FY2025 earnings (January 2026)'},
+      {c:C.cartier,brand:'Cartier',title:'Cartier 1Y avg 4.2M — but Apr 2026 at 3.0M signals softening',
+       text:'Cartier\'s 1Y average of 4.2M masks a recent deterioration: the Apr 2026 reading of 3.0M is below the Apr 2025 level of 3.9M (▼23% YoY). The 30-day downtrend from 7.4M to 3.0M is the most notable brand-level move in the current cycle.',
+       source:'Trend observation based on WeChat Index data'},
     ]
   }
 };
