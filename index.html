@@ -789,8 +789,9 @@ function initTrendsCharts() {
   const ctxChina = document.getElementById('chartTrendsChina').getContext('2d');
   const ctxGlobal = document.getElementById('chartTrendsGlobal').getContext('2d');
   
-  chartChina = new Chart(ctxChina, chartConfigTrends);
-  chartGlobal = new Chart(ctxGlobal, chartConfigTrends);
+  // Each chart needs its own config object — Chart.js mutates it internally
+  chartChina = new Chart(ctxChina, JSON.parse(JSON.stringify(chartConfigTrends)));
+  chartGlobal = new Chart(ctxGlobal, JSON.parse(JSON.stringify(chartConfigTrends)));
 }
 
 function renderTrendsView(region, period) {
