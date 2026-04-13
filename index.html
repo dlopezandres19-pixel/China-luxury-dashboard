@@ -162,7 +162,7 @@
     <p>WeChat Index · Google Trends · NBS Macro Indicators · LVMH & Peers · For Investment Research Purposes</p>
   </div>
   <div>
-    <div class="date-badge">WeChat: Apr 7, 2026 · NBS: Jan–Feb 2026 · Google Trends: Apr 10, 2026 · Resale: Apr 10, 2026</div>
+    <div class="date-badge" id="headerDateBadge">WeChat: Apr 7, 2026 · NBS: Jan–Feb 2026 · Google Trends: Apr 10, 2026 · Resale: Apr 10, 2026</div>
     <div class="source-tag">Sources: Tencent WeChat Index · Google Trends · National Bureau of Statistics China (stats.gov.cn) · Foxytotes · Watchcharts</div>
   </div>
 </div>
@@ -481,6 +481,23 @@
 <script>
 const C={luxury:'#2e9e6b',hermes:'#e8a020',lv:'#5b9bd5',cartier:'#c0392b',gucci:'#6dba6d',dior:'#e74c3c'};
 
+// ── HEADER DATE BADGE (dynamic) ───────────────────────────────────────────────
+// WeChat & NBS dates are hardcoded (manual update). Google Trends & Resale are
+// auto-detected from fetched JSON data and update the badge on page load.
+const HEADER_DATES = {
+  wechat: 'Apr 7, 2026',
+  nbs:    'Jan\u2013Feb 2026',
+  trends: null,
+  resale: null
+};
+function updateHeaderBadge() {
+  const badge = document.getElementById('headerDateBadge');
+  if (!badge) return;
+  const t = HEADER_DATES.trends || '\u2014';
+  const r = HEADER_DATES.resale || '\u2014';
+  badge.textContent = `WeChat: ${HEADER_DATES.wechat} \u00b7 NBS: ${HEADER_DATES.nbs} \u00b7 Google Trends: ${t} \u00b7 Resale: ${r}`;
+}
+
 // ══════════════════════════════════════════════════════════════════════════════
 // NBS DATA ──────────────────────────────────────────────────────────────────
 // All values exact from NBS stats.gov.cn press releases
@@ -729,7 +746,31 @@ async function loadTrendsData() {
     
     trendsData = await response.json();
     window.trendsLoaded = true;
-    
+
+    // Update header badge with latest Google Trends date
+    try {
+      const allTrendDates = [];
+      ['china','global'].forEach(region => {
+        ['7d','30d','12m'].forEach(period => {
+          const labels = trendsData?.[region]?.[period]?.labels;
+          if (labels && labels.length) allTrendDates.push(labels[labels.length - 1]);
+        });
+      });
+      if (allTrendDates.length) {
+        // Labels may be like "Apr 10" or "2026-04-10"; parse the most recent
+        const sorted = allTrendDates.slice().sort((a, b) => new Date(a) - new Date(b));
+        const latest = sorted[sorted.length - 1];
+        // Try to format as "Apr 10, 2026"; if unparseable, keep raw
+        const d = new Date(latest);
+        if (!isNaN(d)) {
+          HEADER_DATES.trends = d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+        } else {
+          HEADER_DATES.trends = latest;
+        }
+        updateHeaderBadge();
+      }
+    } catch(e) { /* non-fatal */ }
+
     initTrendsCharts();
     renderTrendsView('china', '7d');
     renderTrendsView('global', '7d');
@@ -1003,6 +1044,9 @@ async function loadResaleData() {
       document.querySelectorAll('.resale-table-title').forEach(el => el.textContent = `Latest Snapshot · ${fmt}`);
       const sub = document.getElementById('resaleSectionSub');
       if (sub) sub.textContent = `Daily monitoring of resale value retention across luxury handbags & watches · Last update: ${fmt}`;
+      // Update header badge
+      HEADER_DATES.resale = fmt;
+      updateHeaderBadge();
     }
 
     // Build charts and tables
