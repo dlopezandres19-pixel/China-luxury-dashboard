@@ -299,11 +299,9 @@
     <div class="panel">
       <div class="panel-title">Index Trend <span class="period-tag" id="lineTag">Last 30 Days</span></div>
       <div class="panel-subtitle" id="lineSub">Mar 14 – Apr 12, 2026 · Daily weighted engagement score</div>
-      <div class="legend" style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;">
-        <div style="font-size:9px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-right:2px;">Left axis ↑</div>
+      <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:#2e9e6b"></div>Luxury (General)</div>
         <div class="legend-item"><div class="legend-dot" style="background:#e8a020"></div>Hermès</div>
-        <div style="font-size:9px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-left:6px;margin-right:2px;">Right axis ↑</div>
         <div class="legend-item"><div class="legend-dot" style="background:#5b9bd5"></div>Louis Vuitton</div>
         <div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div>Cartier</div>
         <div class="legend-item"><div class="legend-dot" style="background:#6dba6d"></div>Gucci</div>
@@ -661,12 +659,8 @@ const WDATA={
   }
 };
 
-function makeDs(label,data,color,yAxisID='yL'){return{label,data,borderColor:color,backgroundColor:color+'18',borderWidth:2,pointRadius:0,pointHoverRadius:4,tension:0.4,fill:false,yAxisID};}
-const scalesW={
-  x:{grid:{color:'rgba(46,109,164,0.12)'},ticks:{color:'#8aa8c4',font:{size:10}}},
-  yL:{type:'linear',position:'left',grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:'#8aa8c4',font:{size:10},callback:v=>v+'M'},title:{display:true,text:'Luxury · Hermès (M)',color:'rgba(138,168,196,0.6)',font:{size:9}}},
-  yR:{type:'linear',position:'right',grid:{drawOnChartArea:false},ticks:{color:'#8aa8c4',font:{size:10},callback:v=>v+'M'},title:{display:true,text:'LV · Cartier · Gucci (M)',color:'rgba(138,168,196,0.6)',font:{size:9}}}
-};
+function makeDs(label,data,color){return{label,data,borderColor:color,backgroundColor:color+'18',borderWidth:2,pointRadius:0,pointHoverRadius:4,tension:0.4,fill:false};}
+const scalesW={x:{grid:{color:'rgba(46,109,164,0.12)'},ticks:{color:'#8aa8c4',font:{size:10}}},y:{grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:'#8aa8c4',font:{size:10},callback:v=>v+'M'}}};
 const plugL={legend:{display:false},tooltip:{backgroundColor:'#0d1b2e',borderColor:'#2e6da4',borderWidth:1,titleColor:'#a8cceb',bodyColor:'#c9e0f4',callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}M`}}};
 const plugB={legend:{display:false},tooltip:{backgroundColor:'#0d1b2e',borderColor:'#2e6da4',borderWidth:1,titleColor:'#a8cceb',bodyColor:'#c9e0f4',callbacks:{title:i=>i[0].label,label:ctx=>` Avg: ${ctx.parsed.y.toFixed(1)}M`,afterLabel:()=>'(weighted engagement score)'}}};
 
@@ -686,7 +680,7 @@ function setView(view,btn){
   document.getElementById('lineTag').textContent=d.lineTag;document.getElementById('lineSub').textContent=d.lineSub;
   document.getElementById('barTag').textContent=d.barTag;document.getElementById('barSub').textContent=d.barSub;
   lineChart.data.labels=d.labels;
-  lineChart.data.datasets=[makeDs('Luxury (General)',d.luxury,C.luxury,'yL'),makeDs('Hermès',d.hermes,C.hermes,'yL'),makeDs('Louis Vuitton',d.lv,C.lv,'yR'),makeDs('Cartier',d.cartier,C.cartier,'yR'),makeDs('Gucci',d.gucci,C.gucci,'yR')];
+  lineChart.data.datasets=[makeDs('Luxury (General)',d.luxury,C.luxury),makeDs('Hermès',d.hermes,C.hermes),makeDs('Louis Vuitton',d.lv,C.lv),makeDs('Cartier',d.cartier,C.cartier),makeDs('Gucci',d.gucci,C.gucci)];
   lineChart.update('active');
   barChart.data.datasets=[{data:d.avgs,backgroundColor:[C.luxury,C.hermes,C.lv,C.cartier,C.gucci],borderRadius:6,borderSkipped:false}];
   barChart.update('active');renderInsights(view);
@@ -695,7 +689,7 @@ function setView(view,btn){
 (function(){
   const d=WDATA['30d'];
   lineChart.data.labels=d.labels;
-  lineChart.data.datasets=[makeDs('Luxury (General)',d.luxury,C.luxury,'yL'),makeDs('Hermès',d.hermes,C.hermes,'yL'),makeDs('Louis Vuitton',d.lv,C.lv,'yR'),makeDs('Cartier',d.cartier,C.cartier,'yR'),makeDs('Gucci',d.gucci,C.gucci,'yR')];
+  lineChart.data.datasets=[makeDs('Luxury (General)',d.luxury,C.luxury),makeDs('Hermès',d.hermes,C.hermes),makeDs('Louis Vuitton',d.lv,C.lv),makeDs('Cartier',d.cartier,C.cartier),makeDs('Gucci',d.gucci,C.gucci)];
   lineChart.update();
   barChart.data.datasets=[{data:d.avgs,backgroundColor:[C.luxury,C.hermes,C.lv,C.cartier,C.gucci],borderRadius:6,borderSkipped:false}];
   barChart.update();renderInsights('30d');
@@ -753,27 +747,15 @@ async function loadTrendsData() {
     trendsData = await response.json();
     window.trendsLoaded = true;
 
-    // Update header badge with latest Google Trends date
+    // Update header badge with latest Google Trends date from metadata
     try {
-      const allTrendDates = [];
-      ['china','global'].forEach(region => {
-        ['7d','30d','12m'].forEach(period => {
-          const labels = trendsData?.[region]?.[period]?.labels;
-          if (labels && labels.length) allTrendDates.push(labels[labels.length - 1]);
-        });
-      });
-      if (allTrendDates.length) {
-        // Labels may be like "Apr 10" or "2026-04-10"; parse the most recent
-        const sorted = allTrendDates.slice().sort((a, b) => new Date(a) - new Date(b));
-        const latest = sorted[sorted.length - 1];
-        // Try to format as "Apr 10, 2026"; if unparseable, keep raw
-        const d = new Date(latest);
+      const lastUpdate = trendsData?.metadata?.last_update;
+      if (lastUpdate) {
+        const d = new Date(lastUpdate);
         if (!isNaN(d)) {
           HEADER_DATES.trends = d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
-        } else {
-          HEADER_DATES.trends = latest;
+          updateHeaderBadge();
         }
-        updateHeaderBadge();
       }
     } catch(e) { /* non-fatal */ }
 
