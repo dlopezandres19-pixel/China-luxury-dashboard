@@ -357,6 +357,7 @@
         <div>
           <div class="resale-panel-title">Handbags — Value Retention</div>
           <div class="resale-source-tag">Source: Foxytotes</div>
+          <div id="handbagsStalenessBadge"></div>
         </div>
         <div>
           <div class="legend" style="flex-direction:column;gap:5px;align-items:flex-end;">
@@ -369,7 +370,7 @@
         </div>
       </div>
       <div class="resale-chart-wrap"><canvas id="resaleChartHandbags"></canvas></div>
-      <div class="resale-table-title">Latest Snapshot · Loading…</div>
+      <div class="resale-table-title" id="handbagsSnapshotTitle">Latest Snapshot · Loading…</div>
       <table class="resale-table">
         <thead><tr><th>Brand</th><th>VR</th><th>Δ d-1</th><th>Min</th><th>Max</th><th>n</th></tr></thead>
         <tbody id="resaleTableHandbagsBody"></tbody>
@@ -382,6 +383,7 @@
         <div>
           <div class="resale-panel-title">Watches — Value Retention</div>
           <div class="resale-source-tag">Source: Watchcharts · 🟢 Icon models · 🟡 Top-5 fallback</div>
+          <div id="watchesStalenessBadge"></div>
         </div>
         <div>
           <div class="legend" style="flex-direction:column;gap:5px;align-items:flex-end;">
@@ -393,7 +395,7 @@
         </div>
       </div>
       <div class="resale-chart-wrap"><canvas id="resaleChartWatches"></canvas></div>
-      <div class="resale-table-title">Latest Snapshot · Loading…</div>
+      <div class="resale-table-title" id="watchesSnapshotTitle">Latest Snapshot · Loading…</div>
       <table class="resale-table">
         <thead><tr><th>Brand</th><th>VR</th><th>Δ d-1</th><th>Min</th><th>Max</th><th>n</th></tr></thead>
         <tbody id="resaleTableWatchesBody"></tbody>
@@ -1022,18 +1024,103 @@ async function loadResaleData() {
     if (!hRes.ok || !wRes.ok) throw new Error('Fetch failed');
     const [hData, wData] = await Promise.all([hRes.json(), wRes.json()]);
 
-    // Find max date across both files to update section subtitle
-    const allDates = [];
-    Object.values(hData).forEach(arr => { if (arr.length) allDates.push(arr[arr.length-1].date); });
-    Object.values(wData).forEach(arr => { if (arr.length) allDates.push(arr[arr.length-1].date); });
-    const maxDate = allDates.sort().pop() || '';
-    if (maxDate) {
-      const fmt = new Date(maxDate + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-      document.querySelectorAll('.resale-table-title').forEach(el => el.textContent = `Latest Snapshot · ${fmt}`);
-      const sub = document.getElementById('resaleSectionSub');
-      if (sub) sub.textContent = `Daily monitoring of resale value retention across luxury handbags & watches · Last update: ${fmt}`;
-      // Update header badge
-      HEADER_DATES.resale = fmt;
+    // Compute each panel's own latest date independently — do NOT mix
+    // Handbags and Watches, since their scrapers run/fail independently
+    // and can be weeks apart in freshness.
+    function latestDate(dataObj) {
+      const dates = [];
+      Object.values(dataObj).forEach(arr => { if (arr.length) dates.push(arr[arr.length-1].date); });
+      return dates.sort().pop() || '';
+    }
+    function fmtDate(iso) {
+      return iso ? new Date(iso + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+    }
+
+    const handbagsDate = latestDate(hData);
+    const watchesDate = latestDate(wData);
+    const handbagsFmt = fmtDate(handbagsDate);
+    const watchesFmt = fmtDate(watchesDate);
+
+    // Staleness badges — computed dynamically against today's date so this
+    // never needs manual updating. >10 days = flag; >30 days = red flag.
+    function daysStale(iso) {
+      if (!iso) return null;
+      const then = new Date(iso + 'T12:00:00');
+      const now = new Date();
+      return Math.round((now - then) / 86400000);
+    }
+    function renderStalenessBadge(elId, iso, isFrozenValues) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const days = daysStale(iso);
+      if (days === null) { el.innerHTML = ''; return; }
+      if (isFrozenValues) {
+        el.innerHTML = `<div class="signal-badge red" style="margin-top:6px;">🔴 Values unchanged since data collection began — see data quality note below</div>`;
+      } else if (days > 30) {
+        el.innerHTML = `<div class="signal-badge red" style="margin-top:6px;">🔴 Stale — last update ${days}d ago</div>`;
+      } else if (days > 10) {
+        el.innerHTML = `<div class="signal-badge yellow" style="margin-top:6px;">⚠ ${days}d since last update</div>`;
+      } else {
+        el.innerHTML = '';
+      }
+    }
+    // Handbags: check if the values are frozen (all identical) — a data quality
+    // issue distinct from simple staleness, so it gets its own explicit flag.
+    const handbagsFrozen = Object.values(hData).every(arr => {
+      if (arr.length < 3) return false;
+      const vals = arr.map(s => s.weighted_vr);
+      return vals.every(v => v === vals[0]);
+    });
+    renderStalenessBadge('handbagsStalenessBadge', handbagsDate, handbagsFrozen);
+    renderStalenessBadge('watchesStalenessBadge', watchesDate, false);
+
+    const hTitle = document.getElementById('handbagsSnapshotTitle');
+    if (hTitle && handbagsFmt) hTitle.textContent = `Latest Snapshot · ${handbagsFmt}`;
+    const wTitle = document.getElementById('watchesSnapshotTitle');
+    if (wTitle && watchesFmt) wTitle.textContent = `Latest Snapshot · ${watchesFmt}`;
+
+    // Staleness badges — computed live against today's date, so this never
+    // needs manual updating. Flags any panel whose data is >10 days old.
+    function stalenessBadgeHtml(dateIso) {
+      if (!dateIso) return '';
+      const days = Math.floor((Date.now() - new Date(dateIso + 'T12:00:00').getTime()) / 86400000);
+      if (days > 30) return `<div class="signal-badge red" style="margin-top:6px;">🔴 Stale — ${days} days since last real update</div>`;
+      if (days > 10) return `<div class="signal-badge yellow" style="margin-top:6px;">⚠ ${days} days since last update — verify scraper</div>`;
+      return '';
+    }
+    const hBadge = document.getElementById('handbagsStalenessBadge');
+    if (hBadge) hBadge.innerHTML = stalenessBadgeHtml(handbagsDate);
+    const wBadge = document.getElementById('watchesStalenessBadge');
+    if (wBadge) wBadge.innerHTML = stalenessBadgeHtml(watchesDate);
+
+    // Separate check: are the VALUES frozen (identical) across recent entries,
+    // even if new dates keep being appended? This is a different failure mode
+    // than staleness — the scraper runs and commits, but returns the same
+    // number every time (see Foxytotes investigation, Sep 2026).
+    function frozenBrandsCount(dataObj) {
+      let frozen = 0, total = 0;
+      Object.values(dataObj).forEach(arr => {
+        if (arr.length < 5) return;
+        total++;
+        const last5 = arr.slice(-5).map(s => s.weighted_vr);
+        if (last5.every(v => v === last5[0])) frozen++;
+      });
+      return {frozen, total};
+    }
+    const hFrozen = frozenBrandsCount(hData);
+    if (hBadge && hFrozen.total > 0 && hFrozen.frozen === hFrozen.total) {
+      hBadge.innerHTML += `<div class="signal-badge red" style="margin-top:6px;">🔴 Values frozen — identical for last 5 updates across all ${hFrozen.total} brands (source likely serving static/example data, not live results)</div>`;
+    }
+
+    const sub = document.getElementById('resaleSectionSub');
+    if (sub && (handbagsFmt || watchesFmt)) {
+      sub.textContent = `Daily monitoring of resale value retention across luxury handbags & watches · Handbags: ${handbagsFmt || 'n/a'} · Watches: ${watchesFmt || 'n/a'}`;
+    }
+    // Header badge: show the OLDER (more stale) of the two, since that's the
+    // honest worst-case freshness signal for the "Resale" source overall.
+    const oldestFmt = [handbagsDate, watchesDate].filter(Boolean).sort()[0];
+    if (oldestFmt) {
+      HEADER_DATES.resale = fmtDate(oldestFmt) + (handbagsDate !== watchesDate ? ' (oldest of the two)' : '');
       updateHeaderBadge();
     }
 
